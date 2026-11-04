@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Chithi!</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;1,600&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .handwriting {
+            font-family: 'Caveat', cursive;
+        }
+
+        .serif-heading {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Background Animated Floating Elements */
+        .balloon {
+            position: absolute;
+            bottom: -100px;
+            opacity: 0.75;
+            animation: floatUp 14s infinite linear;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-120vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Smooth Page Transition Effects */
+        .page-card {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .page-hidden {
+            opacity: 0;
+            transform: scale(0.92) translateY(20px);
+            pointer-events: none;
+            position: absolute;
+        }
+
+        .page-visible {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            pointer-events: auto;
+            position: relative;
+        }
+
+        /* Custom Input Styles */
+        .custom-input {
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .custom-input:focus {
+            background-color: #ffffff;
+            box-shadow: 0 4px 14px 0 rgba(236, 72, 153, 0.25);
+            border-color: #ec4899;
+        }
+
+        /* Pulse glow for main action buttons */
+        .btn-glow {
+            box-shadow: 0 0 20px rgba(236, 72, 153, 0.4);
+        }
+        .btn-glow:hover {
+            box-shadow: 0 0 30px rgba(236, 72, 153, 0.7);
+        }
+
+        /* Shimmer Effect */
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .shimmer-text {
+            background: linear-gradient(90deg, #db2777 0%, #8b5cf6 50%, #db2777 100%);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            animation: shimmer 4s linear infinite;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-rose-100 via-purple-50 to-pink-100 min-h-screen flex items-center justify-center p-4 md:p-6 relative">
+
+    <!-- Floating Background Balloons -->
+    <div id="balloon-container" class="fixed inset-0 overflow-hidden pointer-events-none z-0"></div>
+
+    <!-- Main Container -->
+    <main class="w-full max-w-2xl z-10 my-auto">
+        
+        <!-- ================= PAGE 1 ================= -->
+        <div id="page-1" class="page-card page-visible bg-white/90 backdrop-blur-md rounded-3xl p-8 md:p-12 shadow-2xl border border-white/60 text-center flex flex-col items-center justify-center space-y-8">
+            
+            <div class="inline-block p-4 bg-pink-100 rounded-full text-pink-500 mb-2 animate-bounce">
+                <i class="fa-solid fa-cake-candles text-4xl md:text-5xl"></i>
+            </div>
+
+            <h1 class="serif-heading text-4xl md:text-6xl font-bold shimmer-text tracking-tight">
+                Happy birthday chithi
+            </h1>
+
+            <div class="relative group my-4">
+                <div class="absolute -inset-1 bg-gradient-to-r from-pink-500 to-purple-600 rounded-2xl blur opacity-30 group-hover:opacity-75 transition duration-500"></div>
+                <div class="relative px-6 py-4 bg-white rounded-2xl border border-pink-100 shadow-sm text-center">
+                    <p class="text-xl md:text-2xl text-gray-700 font-medium handwriting">
+                        ✨ Click the open button Jayakumari ✨
+                    </p>
+                </div>
+            </div>
+
+            <!-- Open Button -->
+            <button onclick="goToPage(2)" class="btn-glow px-10 py-4 bg-gradient-to-r from-pink-500 via-rose-500 to-purple-600 text-white text-xl font-bold rounded-2xl transform transition hover:-translate-y-1 active:translate-y-0 flex items-center space-x-3 group">
+                <span>OPEN</span>
+                <i class="fa-solid fa-gift transition-transform group-hover:rotate-12 text-2xl"></i>
+            </button>
+        </div>
+
+        <!-- ================= PAGE 2 ================= -->
+        <div id="page-2" class="page-card page-hidden bg-white/95 backdrop-blur-md rounded-3xl p-6 md:p-10 shadow-2xl border border-white/60">
+            
+            <div class="text-center mb-6">
+                <span class="text-xs uppercase tracking-widest text-pink-500 font-semibold bg-pink-50 px-3 py-1 rounded-full">Page 2</span>
+                <h2 class="serif-heading text-3xl md:text-4xl font-bold text-gray-800 mt-2">
+                    Happy birthday chithi
+                </h2>
+                <p class="text-gray-500 text-sm mt-1">Tell us a little bit about your favorites!</p>
+            </div>
+
+            <!-- Favorites Form -->
+            <form id="fav-form" onsubmit="handlePage2Submit(event)" class="space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">
+                            <i class="fa-solid fa-palette text-pink-500 mr-2"></i>Favourite Colour
+                        </label>
+                        <input type="text" id="fav-color" required placeholder="e.g. Pink, Blue" class="custom-input w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none text-gray-800">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">
+                            <i class="fa-solid fa-paw text-pink-500 mr-2"></i>Favourite Animal
+                        </label>
+                        <input type="text" id="fav-animal" required placeholder="e.g. Dog, Cat, Peacock" class="custom-input w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none text-gray-800">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">
+                            <i class="fa-solid fa-music text-pink-500 mr-2"></i>Favourite Song
+                        </label>
+                        <input type="text" id="fav-song" required placeholder="e.g. Melody, Classical" class="custom-input w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none text-gray-800">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">
+                            <i class="fa-solid fa-film text-pink-500 mr-2"></i>Favourite Actor
+                        </label>
+                        <input type="text" id="fav-actor" required placeholder="e.g. Favorite star" class="custom-input w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none text-gray-800">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">
+                            <i class="fa-solid fa-apple-whole text-pink-500 mr-2"></i>Favourite Fruit
+                        </label>
+                        <input type="text" id="fav-fruit" required placeholder="e.g. Mango, Apple" class="custom-input w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none text-gray-800">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">
+                            <i class="fa-solid fa-utensils text-pink-500 mr-2"></i>Favourite Food
+                        </label>
+                        <input type="text" id="fav-food" required placeholder="e.g. Biryani, Sweets" class="custom-input w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none text-gray-800">
+                    </div>
+                </div>
+
+                <div class="pt-2 text-center">
+                    <button type="submit" id="page2-submit-btn" class="w-full md:w-auto px-8 py-3 bg-pink-500 hover:bg-pink-600 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition transform active:scale-95">
+                        Submit
+                    </button>
+                </div>
+            </form>
+
+            <!-- Revealed Info Container (Hidden initially) -->
+            <div id="page2-reveal" class="hidden mt-6 pt-6 border-t border-pink-100 text-center space-y-4 animate-fade-in">
+                <div class="bg-gradient-to-r from-pink-50 to-purple-50 p-6 rounded-2xl border border-pink-200 shadow-inner space-y-2">
+                    <p class="text-2xl font-bold text-gray-800">
+                        🎉 <span class="text-pink-600">Your age :</span> 100 years
+                    </p>
+                    <p class="text-lg font-semibold text-gray-700">
+                        🎂 <span class="text-purple-600">Birthday date :</span> 1-11-2026
+                    </p>
+                    <p class="text-lg font-semibold text-gray-700">
+                        👦 <span class="text-indigo-600">Your son name :</span> nilan
+                    </p>
+                    <p class="text-lg font-semibold text-gray-700">
+                        👨 <span class="text-rose-600">Your husband name :</span> naveen
+                    </p>
+                </div>
+
+                <button onclick="goToPage(3)" class="btn-glow px-8 py-3.5 bg-gradient-to-r from-purple-600 to-pink-500 text-white font-bold rounded-xl shadow-lg transition transform hover:-translate-y-0.5 inline-flex items-center space-x-2">
+                    <span>Next Page</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- ================= PAGE 3 ================= -->
+        <div id="page-3" class="page-card page-hidden bg-white/95 backdrop-blur-md rounded-3xl p-6 md:p-10 shadow-2xl border border-white/60 text-center space-y-6">
+            
+            <div class="inline-block p-3 bg-purple-100 rounded-full text-purple-600">
+                <i class="fa-solid fa-heart text-3xl"></i>
+            </div>
+
+            <div class="space-y-2">
+                <span class="text-xs uppercase tracking-widest text-purple-500 font-semibold bg-purple-50 px-3 py-1 rounded-full">Special Message</span>
+                <h2 class="serif-heading text-3xl md:text-5xl font-extrabold text-pink-600 mt-2 leading-tight">
+                    Happy birthday my 2<sup>nd</sup> mother ❤️
+                </h2>
+            </div>
+
+            <!-- Poem Section -->
+            <div class="bg-pink-50/70 p-6 rounded-2xl border border-pink-100 max-w-lg mx-auto shadow-inner text-gray-700 space-y-3 handwriting text-xl md:text-2xl leading-relaxed">
+                <p>🌺 <i>Dearest Chithi,</i> 🌺</p>
+                <p>You give the warmth of a mother’s care,<br>A loving heart that’s always there.<br>With every smile and tender touch,<br>You mean to us so very much!</p>
+                <p>More than an aunt, a guiding light,<br>You make our world so soft and bright.<br>On this sweet day, we wish you joy,<br>Pure happiness no time can destroy!</p>
+            </div>
+
+            <!-- Birthday Design / Wish Card Form -->
+            <form id="design-form" onsubmit="handlePage3Submit(event)" class="space-y-5 text-left max-w-lg mx-auto">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        Write a special message or design wish:
+                    </label>
+                    <textarea id="wish-message" rows="3" placeholder="Wishing you endless joy, peace, and health, Chithi! You mean the world to us..." class="custom-input w-full p-4 rounded-2xl border border-gray-200 outline-none text-gray-800 resize-none" required></textarea>
+                </div>
+
+                <div class="flex justify-center">
+                    <button type="submit" class="btn-glow px-10 py-3.5 bg-gradient-to-r from-pink-500 via-rose-500 to-purple-600 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition transform active:scale-95">
+                        Submit Wish ✨
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- ================= PAGE 4 ================= -->
+        <div id="page-4" class="page-card page-hidden bg-white/95 backdrop-blur-md rounded-3xl p-8 md:p-12 shadow-2xl border border-white/60 text-center space-y-8">
+            
+            <span class="text-xs uppercase tracking-widest text-pink-500 font-semibold bg-pink-50 px-3 py-1 rounded-full">Final Surprise</span>
+
+            <div class="relative py-4">
+                <div class="text-6xl md:text-8xl mb-4 animate-bounce">🎁</div>
+                <h2 class="serif-heading text-3xl md:text-5xl font-black text-gray-800 leading-snug">
+                    Your gift is on <br>
+                    <span class="shimmer-text">dress washing place</span> 🧺✨
+                </h2>
+            </div>
+
+            <!-- Interactive Gift Reveal Area -->
+            <div id="gift-card-display" class="hidden max-w-md mx-auto p-4 bg-pink-50 rounded-2xl border border-pink-200 text-left text-sm text-gray-700 shadow-inner">
+                <p class="font-bold text-pink-600 mb-1">Your Special Note Saved:</p>
+                <p id="saved-note-text" class="italic text-gray-600"></p>
+            </div>
+
+            <div class="pt-4 flex flex-col md:flex-row items-center justify-center gap-4">
+                <button onclick="triggerCelebration()" class="px-6 py-3 bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold rounded-xl shadow-md transition transform active:scale-95 flex items-center space-x-2">
+                    <i class="fa-solid fa-sparkles"></i>
+                    <span>Celebrate Again! 🎉</span>
+                </button>
+                <button onclick="goToPage(1)" class="px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-xl transition">
+                    <i class="fa-solid fa-rotate-left mr-1"></i> Restart Tour
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // Page Navigation Logic
+        let currentPage = 1;
+
+        function goToPage(pageNumber) {
+            const currentEl = document.getElementById(`page-${currentPage}`);
+            const nextEl = document.getElementById(`page-${pageNumber}`);
+
+            if (currentEl && nextEl) {
+                currentEl.classList.remove('page-visible');
+                currentEl.classList.add('page-hidden');
+
+                setTimeout(() => {
+                    nextEl.classList.remove('page-hidden');
+                    nextEl.classList.add('page-visible');
+                    currentPage = pageNumber;
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                    // Page 4 Celebration trigger
+                    if (pageNumber === 4) {
+                        triggerCelebration();
+                    }
+                }, 250);
+            }
+        }
+
+        // Page 2 Form Submission
+        function handlePage2Submit(e) {
+            e.preventDefault();
+            // Fire mini confetti burst
+            confetti({
+                particleCount: 40,
+                spread: 60,
+                origin: { y: 0.7 }
+            });
+
+            // Hide submit button and show revealed stats
+            document.getElementById('page2-submit-btn').classList.add('hidden');
+            const revealContainer = document.getElementById('page2-reveal');
+            revealContainer.classList.remove('hidden');
+        }
+
+        // Page 3 Form Submission
+        function handlePage3Submit(e) {
+            e.preventDefault();
+            const note = document.getElementById('wish-message').value;
+            if (note) {
+                document.getElementById('saved-note-text').innerText = `"${note}"`;
+                document.getElementById('gift-card-display').classList.remove('hidden');
+            }
+            goToPage(4);
+        }
+
+        // Big Confetti Celebration for Page 4
+        function triggerCelebration() {
+            const duration = 3.5 * 1000;
+            const animationEnd = Date.now() + duration;
+            const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 999 };
+
+            function randomInRange(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            const interval = setInterval(function() {
+                const timeLeft = animationEnd - Date.now();
+
+                if (timeLeft <= 0) {
+                    return clearInterval(interval);
+                }
+
+                const particleCount = 50 * (timeLeft / duration);
+
+                // Confetti from both corners
+                confetti(Object.assign({}, defaults, { 
+                    particleCount, 
+                    origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } 
+                }));
+                confetti(Object.assign({}, defaults, { 
+                    particleCount, 
+                    origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } 
+                }));
+            }, 250);
+        }
+
+        // Background Animated Balloons Generation
+        function createBalloons() {
+            const container = document.getElementById('balloon-container');
+            const colors = ['#f472b6', '#c084fc', '#fb7185', '#38bdf8', '#facc15', '#a78bfa'];
+            
+            for (let i = 0; i < 15; i++) {
+                const balloon = document.createElement('div');
+                balloon.className = 'balloon';
+                
+                const size = Math.floor(Math.random() * 25) + 35; // Size between 35px & 60px
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const left = Math.random() * 100; // random X percentage
+                const delay = Math.random() * 12; // staggered animation delay
+                const duration = Math.random() * 8 + 10; // floating speed
+
+                balloon.style.left = `${left}%`;
+                balloon.style.animationDelay = `${delay}s`;
+                balloon.style.animationDuration = `${duration}s`;
+                
+                balloon.innerHTML = `
+                    <svg width="${size}" height="${size * 1.2}" viewBox="0 0 50 60" fill="${color}">
+                        <path d="M25 0 C11.19 0 0 11.19 0 25 C0 38.81 11.19 50 25 50 C38.81 50 50 38.81 50 25 C50 11.19 38.81 0 25 0 Z"/>
+                        <polygon points="25,50 20,56 30,56" fill="${color}"/>
+                        <path d="M25 56 Q23 62 25 68" stroke="#94a3b8" stroke-width="2" fill="none"/>
+                    </svg>
+                `;
+                container.appendChild(balloon);
+            }
+        }
+
+        // Initialize background balloons on load
+        window.addEventListener('DOMContentLoaded', () => {
+            createBalloons();
+        });
+    </script>
+</body>
+</html>
