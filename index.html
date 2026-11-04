@@ -221,6 +221,31 @@
                     </p>
                 </div>
 
+                <!-- Music Player for Chithi -->
+                <div class="bg-gradient-to-r from-purple-600 to-pink-500 text-white p-5 rounded-2xl shadow-xl flex flex-col items-center justify-center space-y-3 relative overflow-hidden">
+                    <div class="flex items-center space-x-2">
+                        <i class="fa-solid fa-music animate-spin text-xl text-yellow-300"></i>
+                        <h3 class="font-bold text-lg">Play Song for Chithi 🎶</h3>
+                    </div>
+
+                    <!-- Equalizer Animation -->
+                    <div id="equalizer" class="flex items-end justify-center space-x-1 h-8 my-1 opacity-50 transition-opacity">
+                        <span class="w-1.5 bg-yellow-300 rounded-full h-3 animate-pulse"></span>
+                        <span class="w-1.5 bg-white rounded-full h-6 animate-pulse delay-75"></span>
+                        <span class="w-1.5 bg-yellow-300 rounded-full h-4 animate-pulse delay-150"></span>
+                        <span class="w-1.5 bg-white rounded-full h-7 animate-pulse delay-200"></span>
+                        <span class="w-1.5 bg-yellow-300 rounded-full h-5 animate-pulse delay-300"></span>
+                    </div>
+
+                    <div class="flex items-center space-x-4">
+                        <button type="button" onclick="toggleSong()" id="song-toggle-btn" class="w-12 h-12 bg-white text-pink-600 rounded-full flex items-center justify-center shadow-lg transform transition hover:scale-105 active:scale-95 text-xl">
+                            <i id="play-icon" class="fa-solid fa-play ml-1"></i>
+                        </button>
+                    </div>
+
+                    <p id="song-status" class="text-xs text-pink-100 font-medium">Click play to listen to Happy Birthday melody! 🎵</p>
+                </div>
+
                 <button onclick="goToPage(3)" class="btn-glow px-8 py-3.5 bg-gradient-to-r from-purple-600 to-pink-500 text-white font-bold rounded-xl shadow-lg transition transform hover:-translate-y-0.5 inline-flex items-center space-x-2">
                     <span>Next Page</span>
                     <i class="fa-solid fa-arrow-right"></i>
@@ -302,7 +327,95 @@
         // Page Navigation Logic
         let currentPage = 1;
 
+        // Web Audio Synthesizer for Birthday Song
+        let audioCtx = null;
+        let isPlayingSong = false;
+        let songTimeout = null;
+
+        const birthdayNotes = [
+            { note: 261.63, duration: 300 }, { note: 261.63, duration: 300 }, // Happy birthday
+            { note: 293.66, duration: 600 }, { note: 261.63, duration: 600 }, // to you
+            { note: 349.23, duration: 600 }, { note: 329.63, duration: 1000 },
+            
+            { note: 261.63, duration: 300 }, { note: 261.63, duration: 300 }, // Happy birthday
+            { note: 293.66, duration: 600 }, { note: 261.63, duration: 600 }, // to you
+            { note: 392.00, duration: 600 }, { note: 349.23, duration: 1000 },
+
+            { note: 261.63, duration: 300 }, { note: 261.63, duration: 300 }, // Happy birthday
+            { note: 523.25, duration: 600 }, { note: 440.00, duration: 600 }, // dear Chithi
+            { note: 349.23, duration: 600 }, { note: 329.63, duration: 600 }, { note: 293.66, duration: 800 },
+
+            { note: 466.16, duration: 300 }, { note: 466.16, duration: 300 }, // Happy birthday
+            { note: 440.00, duration: 600 }, { note: 349.23, duration: 600 }, // to you!
+            { note: 392.00, duration: 600 }, { note: 349.23, duration: 1200 }
+        ];
+
+        function playTone(freq, duration) {
+            if (!isPlayingSong || !audioCtx) return;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.value = freq;
+
+            gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + (duration / 1000));
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start();
+            osc.stop(audioCtx.currentTime + (duration / 1000));
+        }
+
+        function playMelody(index = 0) {
+            if (!isPlayingSong) return;
+
+            if (index >= birthdayNotes.length) {
+                // Loop melody
+                index = 0;
+            }
+
+            const current = birthdayNotes[index];
+            playTone(current.note, current.duration);
+
+            songTimeout = setTimeout(() => {
+                if (isPlayingSong) playMelody(index + 1);
+            }, current.duration + 50);
+        }
+
+        function toggleSong() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+
+            const playIcon = document.getElementById('play-icon');
+            const statusText = document.getElementById('song-status');
+            const eq = document.getElementById('equalizer');
+
+            if (isPlayingSong) {
+                isPlayingSong = false;
+                clearTimeout(songTimeout);
+                playIcon.className = "fa-solid fa-play ml-1";
+                statusText.innerText = "Paused. Click play to listen again!";
+                eq.classList.add('opacity-50');
+            } else {
+                isPlayingSong = true;
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                playIcon.className = "fa-solid fa-pause";
+                statusText.innerText = "🎶 Playing Happy Birthday Song for Chithi!";
+                eq.classList.remove('opacity-50');
+                playMelody(0);
+            }
+        }
+
         function goToPage(pageNumber) {
+            // Stop song when navigating away from page 2
+            if (currentPage === 2 && isPlayingSong) {
+                toggleSong();
+            }
+
             const currentEl = document.getElementById(`page-${currentPage}`);
             const nextEl = document.getElementById(`page-${pageNumber}`);
 
